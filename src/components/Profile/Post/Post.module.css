@@ -1,0 +1,7 @@
+.myPost{
+    margin: 10px 0px;
+}
+
+.myPost>img {
+    width: 50px;
+}

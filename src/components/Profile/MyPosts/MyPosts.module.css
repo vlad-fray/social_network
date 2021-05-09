@@ -1,0 +1,7 @@
+.myPosts {
+    padding: 20px;
+}
+
+.myPosts>p {
+    font-weight: bold;
+}
