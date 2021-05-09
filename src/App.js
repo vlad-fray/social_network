@@ -16,20 +16,15 @@ const App = (props) => {
           path="/dialogs"
           render={() => (
             <Dialogs
-              dialogsPage={props.state.dialogsPage}
-              dispatch={props.dispatch}
+              dialogsPage={props.store.getState().dialogsPage}
+              dispatch={props.store.dispatch}
             />
           )}
         />
         <Route
           exact
           path="/profile"
-          render={() => (
-            <Profile
-              profilePage={props.state.profilePage}
-              dispatch={props.dispatch}
-            />
-          )}
+          render={() => <Profile store={props.store} />}
         />
       </div>
     </div>

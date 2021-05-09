@@ -13,7 +13,8 @@ const MyPosts = (props) => {
       <p>My posts</p>
       <NewPost
         newPostText={props.profilePage.newPostText}
-        dispatch={props.dispatch}
+        updateNewPostText={props.updateNewPostText}
+        addPost={props.addPost}
       />
       {postList}
     </div>

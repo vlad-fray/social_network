@@ -3,21 +3,21 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { store } from "./redux/store";
+import store from "./redux/reduxStore";
 import { BrowserRouter } from "react-router-dom";
 
-let rerenderEntireTree = (state) => {
+let rerenderEntireTree = () => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
+        <App store={store} />
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
   );
 };
 
-rerenderEntireTree(store.getState());
+rerenderEntireTree();
 store.subscribe(rerenderEntireTree);
 
 reportWebVitals();

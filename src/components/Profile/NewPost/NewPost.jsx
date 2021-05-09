@@ -1,17 +1,13 @@
 import React from "react";
 import s from "./NewPost.module.css";
-import {
-  addPostCreator,
-  updateNewPostCreator,
-} from "../../../redux/profileReduser";
 
 const NewPost = (props) => {
   let addPost = () => {
-    props.dispatch(addPostCreator());
+    props.addPost();
   };
 
   let onPostChange = (e) => {
-    props.dispatch(updateNewPostCreator(e.target.value));
+    props.updateNewPostText(e.target.value);
   };
 
   return (
