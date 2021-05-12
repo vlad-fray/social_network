@@ -2,10 +2,6 @@ import React from "react";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import s from "./Dialogs.module.css";
-import {
-  updateNewMessageCreator,
-  sendMessageCreator,
-} from "../../redux/dialogsReduser";
 
 const Dialogs = (props) => {
   let dialogsList = props.dialogsPage.usernameData.map((user) => (
@@ -17,11 +13,11 @@ const Dialogs = (props) => {
   ));
 
   let sendMessage = () => {
-    props.dispatch(sendMessageCreator());
+    props.sendMessage();
   };
 
   let onMessageChange = (e) => {
-    props.dispatch(updateNewMessageCreator(e.target.value));
+    props.onMessageChange(e.target.value);
   };
 
   return (
