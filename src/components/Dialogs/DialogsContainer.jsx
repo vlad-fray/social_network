@@ -1,7 +1,7 @@
 import {
   updateNewMessageCreator,
   sendMessageCreator,
-} from "../../redux/dialogsReduser";
+} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 
@@ -16,8 +16,8 @@ let mapDispatchToProps = (dispatch) => {
     onMessageChange: (text) => {
       dispatch(updateNewMessageCreator(text));
     },
-    sendMessage: () => {
-      dispatch(sendMessageCreator());
+    sendMessage: (userId) => {
+      dispatch(sendMessageCreator(userId));
     },
   };
 };

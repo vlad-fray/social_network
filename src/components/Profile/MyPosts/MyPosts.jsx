@@ -4,8 +4,8 @@ import NewPost from "../NewPost/NewPost";
 import s from "./MyPosts.module.css";
 
 const MyPosts = (props) => {
-  let postList = props.profilePage.postData.map((post) => (
-    <Post message={post.text} likesCount={post.likesCount} />
+  let postList = props.profilePage.postData.map((post, id) => (
+    <Post key={id} message={post.text} likesCount={post.likesCount} />
   ));
 
   return (

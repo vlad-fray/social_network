@@ -1,19 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
+import Messages from "./Messages/Messages";
 import s from "./Dialogs.module.css";
 
 const Dialogs = (props) => {
-  let dialogsList = props.dialogsPage.usernameData.map((user) => (
-    <DialogItem id={user.id} username={user.name} />
+  const [currentDialog, setCurrentDialog] = useState(0);
+
+  let dialogsList = props.dialogsPage.messagesData.map((user) => (
+    <DialogItem
+      key={user.userId}
+      userId={user.userId}
+      username={user.username}
+      setCurrentDialog={setCurrentDialog}
+    />
   ));
 
-  let messagesList = props.dialogsPage.messagesData.map((message) => (
-    <Message id={message.id} text={message.text} />
-  ));
+  let messagesList = props.dialogsPage.messagesData.map((user) => {
+    if (user.userId === currentDialog)
+      return <Messages key={user.userId} messages={user.messages} />;
+  });
 
   let sendMessage = () => {
-    props.sendMessage();
+    props.sendMessage(currentDialog);
   };
 
   let onMessageChange = (e) => {
@@ -23,7 +31,7 @@ const Dialogs = (props) => {
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsList}</div>
-      <div className={s.messages}>
+      <div>
         {messagesList}
         <textarea
           onChange={onMessageChange}
