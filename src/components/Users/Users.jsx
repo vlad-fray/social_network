@@ -2,8 +2,6 @@ import React from "react";
 import s from "./Users.module.css";
 import userPhoto from "../../assets/images/userPhoto.png";
 import { NavLink } from "react-router-dom";
-import { usersAPI } from "../../api/api";
-
 const Users = (props) => {
   return (
     <div>
@@ -43,21 +41,10 @@ const Users = (props) => {
                     (id) => id === user.id
                   )}
                   onClick={() => {
-                    props.toggleIsFollowing(true, user.id);
                     if (!user.followed) {
-                      usersAPI.setIsFollowed(user.id).then((data) => {
-                        if (data.resultCode === 0) {
-                          props.toggleFollow(user.id);
-                        }
-                        props.toggleIsFollowing(false, user.id);
-                      });
+                      props.follow(user.id);
                     } else {
-                      usersAPI.setIsUnFollowed(user.id).then((data) => {
-                        if (data.resultCode === 0) {
-                          props.toggleFollow(user.id);
-                        }
-                        props.toggleIsFollowing(false, user.id);
-                      });
+                      props.unfollow(user.id);
                     }
                   }}
                 >

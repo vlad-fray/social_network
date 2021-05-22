@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const TOGGLE_FOLLOW = "TOGGLE-FOLLOW";
 const SET_USERS = "SET-USERS";
 const SET_CURRENT_PAGE = "SET-CURRENT-PAGE";
@@ -39,7 +41,7 @@ const usersReducer = (state = initialState, action) => {
         ...state,
         isFollowingInProgress: action.isFollowingInProgress
           ? [...state.isFollowingInProgress, action.userId]
-          : state.isFollowingInProgress.filter((id) => id != action.userId),
+          : state.isFollowingInProgress.filter((id) => id !== action.userId),
       };
     default:
       return state;
@@ -69,5 +71,40 @@ export const toggleIsFollowing = (isFollowingInProgress, userId) => ({
   isFollowingInProgress,
   userId,
 });
+
+//Thunk creators
+export const getUsers = (currentPage, pageSize) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true));
+    dispatch(setCurrentPage(currentPage));
+    usersAPI.getUsers(currentPage, pageSize).then((data) => {
+      dispatch(setUsers(data.items));
+      dispatch(setUsersCount(data.totalCount));
+      dispatch(toggleIsLoading(false));
+    });
+  };
+};
+export const follow = (userId) => {
+  return (dispatch) => {
+    dispatch(toggleIsFollowing(true, userId));
+    usersAPI.setIsFollowed(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(toggleFollow(userId));
+      }
+      dispatch(toggleIsFollowing(false, userId));
+    });
+  };
+};
+export const unfollow = (userId) => {
+  return (dispatch) => {
+    dispatch(toggleIsFollowing(true, userId));
+    usersAPI.setIsUnFollowed(userId).then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(toggleFollow(userId));
+      }
+      dispatch(toggleIsFollowing(false, userId));
+    });
+  };
+};
 
 export default usersReducer;

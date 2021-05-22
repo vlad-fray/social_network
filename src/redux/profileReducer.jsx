@@ -1,3 +1,5 @@
+import { usersAPI } from "../api/api";
+
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
 const SET_USER_PROFILE = "SET-USER-PROFILE";
@@ -75,5 +77,19 @@ export const setMyId = (id) => ({
   type: SET_MY_ID,
   id,
 });
+
+//Thunk creators
+export const getProfile = (userId) => {
+  return (dispatch) => {
+    dispatch(toggleIsLoading(true));
+    userId = userId ? userId : 2;
+    usersAPI
+      .getUserProfile(userId)
+      .then((data) => {
+        dispatch(setUserProfile(data));
+      })
+      .then(dispatch(toggleIsLoading(false)));
+  };
+};
 
 export default profileReducer;

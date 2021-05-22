@@ -3,39 +3,15 @@ import Users from "./Users";
 import loadingImg from "../../assets/images/loading.svg";
 import s from "./Users.module.css";
 import { connect } from "react-redux";
-import {
-  toggleFollow,
-  setUsers,
-  setCurrentPage,
-  setUsersCount,
-  toggleIsLoading,
-  toggleIsFollowing,
-} from "../../redux/usersReducer";
-import { usersAPI } from "../../api/api";
+import { getUsers, follow, unfollow } from "../../redux/usersReducer";
 
 class UsersComponent extends React.Component {
   componentDidMount() {
-    if (!this.props.users[0]) {
-      this.props.toggleIsLoading(true);
-      usersAPI
-        .getUsers(this.props.currentPage, this.props.pageSize)
-        .then((data) => {
-          this.props.setUsers(data.items);
-          this.props.setUsersCount(data.totalCount);
-          this.props.toggleIsLoading(false);
-        });
-    }
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (pageNumber) => {
-    this.props.toggleIsLoading(true);
-    this.props.setCurrentPage(pageNumber);
-    usersAPI
-      .getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        this.props.setUsers(data.items);
-        this.props.toggleIsLoading(false);
-      });
+    this.props.getUsers(pageNumber, this.props.pageSize);
   };
 
   render() {
@@ -56,11 +32,11 @@ class UsersComponent extends React.Component {
             pages={pages}
             currentPage={this.props.currentPage}
             users={this.props.users}
-            toggleFollow={this.props.toggleFollow}
             onPageChanged={this.onPageChanged}
             totalUsersCount={this.props.totalUsersCount}
-            toggleIsFollowing={this.props.toggleIsFollowing}
             isFollowingInProgress={this.props.isFollowingInProgress}
+            follow={this.props.follow}
+            unfollow={this.props.unfollow}
           />
         )}
       </>
@@ -80,12 +56,9 @@ let mapStateToProps = (state) => {
 };
 
 let mapDispatchToProps = {
-  toggleFollow,
-  setUsers,
-  setCurrentPage,
-  setUsersCount,
-  toggleIsLoading,
-  toggleIsFollowing,
+  getUsers,
+  follow,
+  unfollow,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersComponent);
