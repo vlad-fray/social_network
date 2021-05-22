@@ -15,10 +15,13 @@ const Dialogs = (props) => {
     />
   ));
 
-  let messagesList = props.dialogsPage.messagesData.map((user) => {
-    if (user.userId === currentDialog)
+  let messagesList = props.dialogsPage.messagesData
+    .filter((user) => {
+      return user.userId === currentDialog;
+    })
+    .map((user) => {
       return <Messages key={user.userId} messages={user.messages} />;
-  });
+    });
 
   let sendMessage = () => {
     props.sendMessage(currentDialog);

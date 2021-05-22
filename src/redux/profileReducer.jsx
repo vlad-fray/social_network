@@ -1,5 +1,8 @@
 const ADD_POST = "ADD-POST";
 const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const SET_USER_PROFILE = "SET-USER-PROFILE";
+const TOGGLE_LOADING_STATE = "TOGGLE-LOADING-STATE";
+const SET_MY_ID = "SET-MY-ID";
 
 let initialState = {
   postData: [
@@ -7,6 +10,9 @@ let initialState = {
     { id: 1, text: "Hi, guys", likesCount: 2 },
   ],
   newPostText: "",
+  profile: null,
+  myId: null,
+  isLoading: false,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -31,22 +37,43 @@ const profileReducer = (state = initialState, action) => {
         newPostText: action.text,
       };
     }
+    case "SET-USER-PROFILE": {
+      return { ...state, profile: action.profile };
+    }
+    case "TOGGLE-LOADING-STATE":
+      return { ...state, isLoading: action.isLoading };
+    case "SET-MY-ID":
+      return { ...state, id: action.id };
     default:
       return state;
   }
 };
 
-export const addPostCreator = () => {
+//Action creators
+export const addPost = () => {
   return {
     type: ADD_POST,
   };
 };
-
-export const updateNewPostCreator = (newPostText) => {
+export const updateNewPostText = (newPostText) => {
   return {
     type: UPDATE_NEW_POST_TEXT,
     text: newPostText,
   };
 };
+export const setUserProfile = (profile) => {
+  return {
+    type: SET_USER_PROFILE,
+    profile,
+  };
+};
+export const toggleIsLoading = (isLoading) => ({
+  type: TOGGLE_LOADING_STATE,
+  isLoading,
+});
+export const setMyId = (id) => ({
+  type: SET_MY_ID,
+  id,
+});
 
 export default profileReducer;

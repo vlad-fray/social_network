@@ -22,8 +22,8 @@ const Navbar = () => {
       <NavLink className={s.navLink} to="#">
         News
       </NavLink>
-      <NavLink className={s.navLink} to="/friends">
-        Friends
+      <NavLink className={s.navLink} to="/users">
+        Users
       </NavLink>
       <NavLink className={s.navLink} to="#">
         Settings
