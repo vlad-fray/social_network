@@ -4,8 +4,10 @@ import loadingImg from "../../assets/images/loading.svg";
 import s from "./Users.module.css";
 import { connect } from "react-redux";
 import { getUsers, follow, unfollow } from "../../redux/usersReducer";
+import { withAuthRedirect } from "../../hocs/withAuthRedirect";
+import { compose } from "redux";
 
-class UsersComponent extends React.Component {
+class UsersContainer extends React.Component {
   componentDidMount() {
     this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
@@ -61,4 +63,7 @@ let mapDispatchToProps = {
   unfollow,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersComponent);
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withAuthRedirect
+)(UsersContainer);

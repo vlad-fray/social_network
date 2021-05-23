@@ -8,8 +8,10 @@ import { connect } from "react-redux";
 import Profile from "./Profile";
 import loading from "../../assets/images/loading.svg";
 import { withRouter } from "react-router";
+import { withAuthRedirect } from "../../hocs/withAuthRedirect";
+import { compose } from "redux";
 
-class ProfileComponent extends React.Component {
+class ProfileContainer extends React.Component {
   componentDidMount() {
     this.props.getProfile(this.props.match.params.userId);
   }
@@ -38,7 +40,8 @@ let mapDispatchToProps = {
   getProfile,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withRouter(ProfileComponent));
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
+  withAuthRedirect
+)(ProfileContainer);
