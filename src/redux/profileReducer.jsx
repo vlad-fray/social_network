@@ -82,7 +82,7 @@ export const setMyId = (id) => ({
 export const getProfile = (userId) => {
   return (dispatch) => {
     dispatch(toggleIsLoading(true));
-    userId = userId ? userId : 2;
+    userId = userId ? userId : 17110;
     usersAPI
       .getUserProfile(userId)
       .then((data) => {
